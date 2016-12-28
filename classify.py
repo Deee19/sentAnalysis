@@ -66,7 +66,7 @@ def feature_extraction_classify(words):
     #     print('%r => %s' % (doc, category))
 
     # saving trained model
-    # joblib.dump(nb, 'nb_classify.pkl')
+    joblib.dump(svc_model, 'svm_classify.pkl')
 
     # raising valueerror
     # print(nb.score(X_train, y_train))
