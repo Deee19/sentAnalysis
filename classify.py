@@ -1,10 +1,12 @@
 import re
 import nltk
 import pandas as pd
+import numpy as np
 from nltk.stem.wordnet import WordNetLemmatizer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.cross_validation import train_test_split
 from sklearn.naive_bayes import MultinomialNB
+from sklearn.svm import SVC
 from sklearn.pipeline import make_pipeline
 from sklearn.externals import joblib
 from sklearn import metrics
@@ -48,23 +50,27 @@ def feature_extraction_classify(words):
     # print (tfs.shape)
 
     # Classify
+    # Using Multinominal Naive Bayes
     nb = MultinomialNB().fit(tfs, y_train)
-
+    # Using SVM.svc
+    svc_model = SVC(kernel='linear').fit(tfs, y_train)
     # print(nb)
 
     #Make predictions
     pred_test = tfidf.transform(X_test.values.astype('U'))
-    predicted = nb.predict(pred_test)
+    predicted = svc_model.predict(pred_test)
+
+
 
     # for doc, category in zip(X_test, predicted):
-    #     print('%r => %s' % (doc, y_test))
+    #     print('%r => %s' % (doc, category))
 
     # saving trained model
     # joblib.dump(nb, 'nb_classify.pkl')
 
     # raising valueerror
-    print(nb.score(X_train, y_train))
-    print(nb.score(X_test, y_test))
+    # print(nb.score(X_train, y_train))
+    # print(nb.score(X_test, y_test))
     # calculate accuracy
     print(metrics.accuracy_score(y_test, predicted))
     # confusion matrix
@@ -78,9 +84,5 @@ X = inpTweets['Tweets']
 y = inpTweets['cluster']
 
 X_train, X_test, y_train, y_test = train_test_split(X,y,random_state=1)
-print(X_train.shape)
-print(X_test.shape)
-print(y_train.shape)
-print(y_test.shape)
 
 feature_extraction_classify(inpTweets['Tweets'])
