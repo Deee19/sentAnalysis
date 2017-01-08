@@ -1,0 +1,16 @@
+body {
+    background: url(mountain.jpg) no-repeat;
+    background-size: cover;
+}
+.analyze {
+    position: relative;
+    left: 150px;
+    top: 100px;
+}
+
+.foot {
+    display: block;
+    position: relative;
+    top: 300px;
+    text-align: center;
+}
